@@ -1,125 +1,40 @@
-﻿################################################################################
-# .NET / Visual Studio .gitignore
-################################################################################
+﻿# .NET build artifacts
+**/bin/
+**/obj/
 
-## Build results
-[Dd]ebug/
-[Dd]ebugPublic/
-[Rr]elease/
-[Rr]eleases/
-x64/
-x86/
-[Ww][Ii][Nn]32/
-[Aa][Rr][Mm]/
-[Aa][Rr][Mm]64/
-bld/
-[Bb]in/
-[Oo]bj/
-[Ll]og/
-[Ll]ogs/
+# =========================
+# .NET / Visual Studio
+# =========================
+bin/
+obj/
+**/bin/
+**/obj/
 
-# Visual Studio cache/options directory
-.vs/
-/.vs/SecureFlow
-.vscode/
-.idea/
-
+# =========================
 # User-specific files
-*.rsuser
-*.suo
+# =========================
+.vs/
 *.user
+*.suo
 *.userosscache
 *.sln.docstates
 
-# .NET Core
-project.lock.json
-project.fragment.lock.json
-artifacts/
+# =========================
+# Build results
+# =========================
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
 
-# NuGet Packages
-*.nupkg
-*.snupkg
-**/packages/*
-!**/packages/build/
-*.nuget.props
-*.nuget.targets
-
-# Logs
+# =========================
+# Logs & temp
+# =========================
 *.log
+*.tmp
 
-# EF Core
-Migrations/**/obj/
-
-# MSTest test Results
-[Tt]est[Rr]esult*/
-[Bb]uild[Ll]og.*
-
-# NUnit
-*.VisualState.xml
-TestResult.xml
-nunit-*.xml
-
-# Coverage reports
-*.coverage
-*.coveragexml
-
-# NCrunch
-_NCrunch_*
-.*crunch*.local.xml
-nCrunchTemp_*
-
-# MightyMoose
-*.mm.*
-AutoTest.Net/
-
-# Web workbench
-.sass-cache/
-
-# Installshield output folder
-[Ee]xpress/
-
-# DocProject
-DocProject/buildhelp/
-DocProject/Help/*.HxT
-DocProject/Help/*.HxC
-DocProject/Help/*.hhc
-DocProject/Help/*.hhk
-DocProject/Help/*.hhp
-DocProject/Help/Html2
-DocProject/Help/html
-
-# Click-Once directory
-publish/
-
-# Publish Web Output
-*.[Pp]ublish.xml
-*.azurePubxml
-*.pubxml
-*.publishproj
-
-# Windows image file caches
-Thumbs.db
-ehthumbs.db
-
-# Folder config file
-Desktop.ini
-
-# Recycle Bin used on file shares
-$RECYCLE.BIN/
-
-# Mac desktop service store files
+# =========================
+# OS files
+# =========================
 .DS_Store
-
-# Rider
-*.sln.iml
-
-################################################################################
-# Project-specific: Ensure bin and obj are ignored for all projects
-################################################################################
-# These patterns ensure bin and obj folders are ignored at any level
-**/bin/
-**/obj/
-**/Bin/
-**/Obj/
-**/BIN/
-**/OBJ/
+Thumbs.db
