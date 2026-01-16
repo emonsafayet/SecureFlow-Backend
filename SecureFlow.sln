@@ -13,6 +13,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecureFlow.Domain", "src\Se
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecureFlow.Infrastructure", "src\SecureFlow.Infrastructure\SecureFlow.Infrastructure.csproj", "{3ECF895C-7D72-4091-8647-D643EDB47301}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SecureFlow.Shared", "SecureFlow.Shared\SecureFlow.Shared.csproj", "{4A4F0692-AEC5-4DDC-A8EC-D7180E3EAECF}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -71,6 +73,18 @@ Global
 		{3ECF895C-7D72-4091-8647-D643EDB47301}.Release|x64.Build.0 = Release|Any CPU
 		{3ECF895C-7D72-4091-8647-D643EDB47301}.Release|x86.ActiveCfg = Release|Any CPU
 		{3ECF895C-7D72-4091-8647-D643EDB47301}.Release|x86.Build.0 = Release|Any CPU
+		{4A4F0692-AEC5-4DDC-A8EC-D7180E3EAECF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4A4F0692-AEC5-4DDC-A8EC-D7180E3EAECF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4A4F0692-AEC5-4DDC-A8EC-D7180E3EAECF}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{4A4F0692-AEC5-4DDC-A8EC-D7180E3EAECF}.Debug|x64.Build.0 = Debug|Any CPU
+		{4A4F0692-AEC5-4DDC-A8EC-D7180E3EAECF}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{4A4F0692-AEC5-4DDC-A8EC-D7180E3EAECF}.Debug|x86.Build.0 = Debug|Any CPU
+		{4A4F0692-AEC5-4DDC-A8EC-D7180E3EAECF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4A4F0692-AEC5-4DDC-A8EC-D7180E3EAECF}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4A4F0692-AEC5-4DDC-A8EC-D7180E3EAECF}.Release|x64.ActiveCfg = Release|Any CPU
+		{4A4F0692-AEC5-4DDC-A8EC-D7180E3EAECF}.Release|x64.Build.0 = Release|Any CPU
+		{4A4F0692-AEC5-4DDC-A8EC-D7180E3EAECF}.Release|x86.ActiveCfg = Release|Any CPU
+		{4A4F0692-AEC5-4DDC-A8EC-D7180E3EAECF}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -80,5 +94,9 @@ Global
 		{B17C95AE-A2DC-4281-9CFF-4A37193B6A5D} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 		{78D43DFB-B353-477D-B308-A289B75E0164} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
 		{3ECF895C-7D72-4091-8647-D643EDB47301} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
+		{4A4F0692-AEC5-4DDC-A8EC-D7180E3EAECF} = {827E0CD3-B72D-47B6-A68D-7590B98EB39B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {469229DD-92DD-4674-9C5A-5B63C9814A2E}
 	EndGlobalSection
 EndGlobal

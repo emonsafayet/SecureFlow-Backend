@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using SecureFlow.Application.Common.Interfaces;
-using SecureFlow.Domain.Entities;
+using SecureFlow.Domain.Auth;
 
 namespace SecureFlow.Infrastructure.Security;
 

@@ -1,4 +1,4 @@
-﻿using SecureFlow.Domain.Entities;
+﻿using SecureFlow.Domain.Auth;
 
 namespace SecureFlow.Application.Common.Interfaces;
 

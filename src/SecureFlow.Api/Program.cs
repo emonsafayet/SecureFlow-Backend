@@ -4,6 +4,7 @@ using System.Text;
 using SecureFlow.Application.Common.Interfaces;
 using SecureFlow.Infrastructure;
 using SecureFlow.Infrastructure.Persistence;
+using SecureFlow.Application;
 
 internal class Program
 {

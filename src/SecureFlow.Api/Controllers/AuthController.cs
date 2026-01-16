@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
-using SecureFlow.Application.Auth.DTOs;
+﻿using MediatR;
+using Microsoft.AspNetCore.Mvc;
 using SecureFlow.Application.Auth.Login;
+using SecureFlow.Application.Auth.Users.Queries;
+using SecureFlow.Application.Users;
 
 namespace SecureFlow.Api.Controllers;
 
@@ -8,17 +10,24 @@ namespace SecureFlow.Api.Controllers;
 [Route("api/auth")]
 public class AuthController : ControllerBase
 {
-    private readonly LoginService _loginService;
+    private readonly IMediator _mediator;
 
-    public AuthController(LoginService loginService)
+    public AuthController(IMediator mediator)
     {
-        _loginService = loginService;
+        _mediator = mediator;
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login(LoginRequestDto request)
+    public async Task<IActionResult> Login(LoginCommand command)
     {
-        var result = await _loginService.LoginAsync(request);
+        var result = await _mediator.Send(command);
+        return Ok(result);
+    }
+
+    [HttpGet("{userId:int}")]
+    public async Task<ActionResult<UserDto>> GetUser(int userId)
+    {
+        var result = await _mediator.Send(new GetUserByIdQuery(userId));
         return Ok(result);
     }
 }

@@ -1,17 +1,17 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using MediatR;
+using Microsoft.EntityFrameworkCore;
 using SecureFlow.Application.Auth.DTOs;
 using SecureFlow.Application.Common.Interfaces;
-using System;
 
 namespace SecureFlow.Application.Auth.Login;
 
-public class LoginService
+public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResponseDto>
 {
     private readonly IAppDbContext _db;
     private readonly IPasswordHasherService _hasher;
     private readonly IJwtTokenGenerator _jwt;
 
-    public LoginService(
+    public LoginCommandHandler(
         IAppDbContext db,
         IPasswordHasherService hasher,
         IJwtTokenGenerator jwt)
@@ -21,10 +21,12 @@ public class LoginService
         _jwt = jwt;
     }
 
-    public async Task<LoginResponseDto> LoginAsync(LoginRequestDto request)
+    public async Task<LoginResponseDto> Handle(
+        LoginCommand request,
+        CancellationToken cancellationToken)
     {
         var user = await _db.Users
-            .FirstOrDefaultAsync(x => x.Email == request.Email);
+            .FirstOrDefaultAsync(x => x.Email == request.Email, cancellationToken);
 
         if (user == null || !_hasher.Verify(user.PasswordHash, request.Password))
             throw new UnauthorizedAccessException("Invalid credentials");
