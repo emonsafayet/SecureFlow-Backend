@@ -7,8 +7,7 @@ namespace SecureFlow.Domain.Auth;
 
 public class User : AuditableSoftDeleteEntity , IAuthEntity
 {
-    public int UserId { get; set; }     // PK (DB)
-    public Guid Id { get; set; }        // Public ID
+    public Guid UserId { get;  set; } = Guid.NewGuid(); // public-safe ID       
     public string? FirstName { get; set; }
     public string? LastName { get; set; }
     public string Email { get; set; } = default!;

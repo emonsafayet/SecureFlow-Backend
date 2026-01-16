@@ -3,11 +3,12 @@ using SecureFlow.Domain.Common.Markers;
 
 namespace SecureFlow.Domain.Auth;
 
-public class Role : AuditableSoftDeleteEntity, IAuthEntity
+public class Role : BaseEntity, IAuthEntity
 {
-    public int Id { get; set; }
     public string Name { get; set; } = default!;
+    public string? Description { get; set; }
+    public bool IsActive { get; set; } = true;
 
-    public ICollection<RolePermission> Permissions { get; set; }
+    public ICollection<RolePermission> RolePermissions { get; set; }
         = new List<RolePermission>();
 }

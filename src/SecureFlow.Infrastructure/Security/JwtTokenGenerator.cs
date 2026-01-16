@@ -23,7 +23,7 @@ public class JwtTokenGenerator : IJwtTokenGenerator
         var claims = new List<Claim>
         {
             new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()), // Guid
-            new Claim("userId", user.UserId.ToString()),                // int PK
+            new Claim("userId", user.Id.ToString()),                // int PK
             new Claim(JwtRegisteredClaimNames.Email, user.Email)
         };
 
@@ -32,13 +32,13 @@ public class JwtTokenGenerator : IJwtTokenGenerator
         {
             var permissions = user.UserRoles
                 .Where(ur => ur.Role != null)
-                .SelectMany(ur => ur.Role!.Permissions)
-                .Select(p => p.Permission)
+                .SelectMany(ur => ur.Role!.RolePermissions)
+                .Select(p => p.Permission.Name)  
                 .Distinct();
 
             foreach (var permission in permissions)
             {
-                claims.Add(new Claim("permission", permission));
+                claims.Add(new Claim("permission", permission));  
             }
         }
 

@@ -12,8 +12,8 @@ using SecureFlow.Infrastructure.Persistence;
 namespace SecureFlow.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260116145805_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20260116221520_RolePermission_Menu_MenuPermission_User_tables")]
+    partial class RolePermission_Menu_MenuPermission_User_tables
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -25,7 +25,7 @@ namespace SecureFlow.Infrastructure.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("SecureFlow.Domain.Auth.Role", b =>
+            modelBuilder.Entity("SecureFlow.Domain.Auth.Menu", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -55,18 +55,106 @@ namespace SecureFlow.Infrastructure.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int>("Order")
+                        .HasColumnType("integer");
+
+                    b.Property<string>("Url")
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Menus", "auth");
+                });
+
+            modelBuilder.Entity("SecureFlow.Domain.Auth.MenuPermission", b =>
+                {
+                    b.Property<int>("MenuId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PermissionId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("MenuId", "PermissionId");
+
+                    b.HasIndex("PermissionId");
+
+                    b.ToTable("MenuPermissions");
+                });
+
+            modelBuilder.Entity("SecureFlow.Domain.Auth.PermissionEntity", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Action")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Resource")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Permissions", "auth");
+                });
+
+            modelBuilder.Entity("SecureFlow.Domain.Auth.Role", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<string>("Description")
+                        .HasColumnType("text");
+
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("boolean");
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("text");
+
                     b.HasKey("Id");
 
                     b.ToTable("Roles", "auth");
                 });
 
+            modelBuilder.Entity("SecureFlow.Domain.Auth.RolePermission", b =>
+                {
+                    b.Property<int>("RoleId")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PermissionId")
+                        .HasColumnType("integer");
+
+                    b.HasKey("RoleId", "PermissionId");
+
+                    b.HasIndex("PermissionId");
+
+                    b.ToTable("RolePermissions", "auth");
+                });
+
             modelBuilder.Entity("SecureFlow.Domain.Auth.User", b =>
                 {
-                    b.Property<int>("UserId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("UserId"));
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
                     b.Property<int>("CreatedBy")
                         .HasColumnType("integer");
@@ -87,9 +175,6 @@ namespace SecureFlow.Infrastructure.Migrations
                     b.Property<string>("FirstName")
                         .HasColumnType("text");
 
-                    b.Property<Guid>("Id")
-                        .HasColumnType("uuid");
-
                     b.Property<bool>("IsActive")
                         .HasColumnType("boolean");
 
@@ -109,15 +194,21 @@ namespace SecureFlow.Infrastructure.Migrations
                     b.Property<int?>("ProImgEvidenceId")
                         .HasColumnType("integer");
 
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uuid");
+
                     b.Property<int>("UserType")
                         .HasColumnType("integer");
 
-                    b.HasKey("UserId");
+                    b.HasKey("Id");
 
-                    b.HasIndex("Id")
+                    b.HasIndex("Email")
                         .IsUnique();
 
                     b.HasIndex("ProImgEvidenceId");
+
+                    b.HasIndex("UserId")
+                        .IsUnique();
 
                     b.ToTable("Users", "auth");
                 });
@@ -227,11 +318,50 @@ namespace SecureFlow.Infrastructure.Migrations
                     b.ToTable("Evidence", "business");
                 });
 
+            modelBuilder.Entity("SecureFlow.Domain.Auth.MenuPermission", b =>
+                {
+                    b.HasOne("SecureFlow.Domain.Auth.Menu", "Menu")
+                        .WithMany("MenuPermissions")
+                        .HasForeignKey("MenuId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SecureFlow.Domain.Auth.PermissionEntity", "Permission")
+                        .WithMany()
+                        .HasForeignKey("PermissionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Menu");
+
+                    b.Navigation("Permission");
+                });
+
+            modelBuilder.Entity("SecureFlow.Domain.Auth.RolePermission", b =>
+                {
+                    b.HasOne("SecureFlow.Domain.Auth.PermissionEntity", "Permission")
+                        .WithMany()
+                        .HasForeignKey("PermissionId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SecureFlow.Domain.Auth.Role", "Role")
+                        .WithMany("RolePermissions")
+                        .HasForeignKey("RoleId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Permission");
+
+                    b.Navigation("Role");
+                });
+
             modelBuilder.Entity("SecureFlow.Domain.Auth.User", b =>
                 {
                     b.HasOne("SecureFlow.Domain.Business.Evidences.Evidence", "ProImgEvidence")
                         .WithMany()
-                        .HasForeignKey("ProImgEvidenceId");
+                        .HasForeignKey("ProImgEvidenceId")
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.Navigation("ProImgEvidence");
                 });
@@ -253,6 +383,16 @@ namespace SecureFlow.Infrastructure.Migrations
                     b.Navigation("Role");
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SecureFlow.Domain.Auth.Menu", b =>
+                {
+                    b.Navigation("MenuPermissions");
+                });
+
+            modelBuilder.Entity("SecureFlow.Domain.Auth.Role", b =>
+                {
+                    b.Navigation("RolePermissions");
                 });
 
             modelBuilder.Entity("SecureFlow.Domain.Auth.User", b =>

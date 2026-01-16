@@ -11,13 +11,18 @@ public class AppDbContext : DbContext, IAppDbContext
 {
     private readonly ICurrentUserService _currentUser;
     public AppDbContext(DbContextOptions<AppDbContext> options, ICurrentUserService currentUser)
-        : base(options) {
+        : base(options)
+    {
         _currentUser = currentUser;
     }
 
     public DbSet<User> Users => Set<User>();
     public DbSet<Role> Roles => Set<Role>();
     public DbSet<UserRole> UserRoles => Set<UserRole>();
+    public DbSet<PermissionEntity> Permissions => Set<PermissionEntity>();
+    public DbSet<RolePermission> RolePermissions => Set<RolePermission>();
+    public DbSet<Menu> Menus => Set<Menu>();
+    public DbSet<MenuPermission> MenuPermissions => Set<MenuPermission>();
 
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -54,13 +59,24 @@ public class AppDbContext : DbContext, IAppDbContext
 
         modelBuilder.Entity<User>(entity =>
         {
-            entity.HasKey(u => u.UserId);
+            // 1️ Primary Key (DB identity)
+            entity.HasKey(u => u.Id);
 
+            // 2️ Public ID (GUID) – generated in code, NOT DB
             entity.Property(u => u.UserId)
-                  .ValueGeneratedOnAdd();
+                  .IsRequired();
 
-            entity.HasIndex(u => u.Id)
+            entity.HasIndex(u => u.UserId)
                   .IsUnique();
+
+            // 3️ Email should be unique
+            entity.HasIndex(u => u.Email)
+                  .IsUnique();
+            // 4️ Optional profile image
+            entity.HasOne(u => u.ProImgEvidence)
+                  .WithMany()
+                  .HasForeignKey(u => u.ProImgEvidenceId)
+                  .OnDelete(DeleteBehavior.Restrict);
         });
 
         modelBuilder.Entity<UserRole>()
@@ -78,12 +94,19 @@ public class AppDbContext : DbContext, IAppDbContext
 
         modelBuilder.Entity<RolePermission>(entity =>
         {
-            entity.HasKey(x => new { x.RoleId, x.Permission });
+            entity.HasKey(x => new { x.RoleId, x.PermissionId });
 
-            entity.Property(x => x.Permission)
-                  .HasMaxLength(200)
-                  .IsRequired();
-        }); 
+            entity.HasOne(x => x.Role)
+                  .WithMany(r => r.RolePermissions)
+                  .HasForeignKey(x => x.RoleId);
+
+            entity.HasOne(x => x.Permission)
+                  .WithMany()
+                  .HasForeignKey(x => x.PermissionId);
+        });
+
+        modelBuilder.Entity<MenuPermission>()
+                    .HasKey(x => new { x.MenuId, x.PermissionId });
 
     }
     private static LambdaExpression CreateIsDeletedFilter(Type type)
