@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("SecureFlow.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ddc42c52a71b9c8c5360ca9a0c1284d177eb8f59")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+23fb7693d7d3ee626a79e1480931981e4ddc215f")]
 [assembly: System.Reflection.AssemblyProductAttribute("SecureFlow.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("SecureFlow.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
