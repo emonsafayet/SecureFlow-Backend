@@ -12,8 +12,8 @@ using SecureFlow.Infrastructure.Persistence;
 namespace SecureFlow.Infrastructure.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260116135020_Update_User_Role_UserRole_Schema_Properties")]
-    partial class Update_User_Role_UserRole_Schema_Properties
+    [Migration("20260116145805_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

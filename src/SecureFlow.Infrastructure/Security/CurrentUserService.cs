@@ -11,13 +11,37 @@ public class CurrentUserService : ICurrentUserService
         _httpContextAccessor = httpContextAccessor;
     }
 
-    public int UserId =>
-     int.Parse(_httpContextAccessor.HttpContext!
-         .User.FindFirst("userId")!.Value);
+    public int UserId
+    {
+        get
+        {
+            var httpContext = _httpContextAccessor.HttpContext;
+            if (httpContext == null || httpContext.User.Identity?.IsAuthenticated != true)
+                return 0;
 
-    public Guid? UserGuid =>
-        Guid.Parse(_httpContextAccessor.HttpContext!
-            .User.FindFirst(ClaimTypes.NameIdentifier)!.Value);
+            var userIdClaim = httpContext.User.FindFirst("userId");
+            if (userIdClaim == null || string.IsNullOrEmpty(userIdClaim.Value))
+                return 0;
+
+            return int.TryParse(userIdClaim.Value, out var userId) ? userId : 0;
+        }
+    }
+
+    public Guid? UserGuid
+    {
+        get
+        {
+            var httpContext = _httpContextAccessor.HttpContext;
+            if (httpContext == null || httpContext.User.Identity?.IsAuthenticated != true)
+                return null;
+
+            var nameIdentifierClaim = httpContext.User.FindFirst(ClaimTypes.NameIdentifier);
+            if (nameIdentifierClaim == null || string.IsNullOrEmpty(nameIdentifierClaim.Value))
+                return null;
+
+            return Guid.TryParse(nameIdentifierClaim.Value, out var userGuid) ? userGuid : null;
+        }
+    }
 
     public string? Email =>
         _httpContextAccessor.HttpContext?
