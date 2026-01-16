@@ -1,0 +1,6 @@
+@SecureFlow.Api_HostAddress = http://localhost:5183
+
+GET {{SecureFlow.Api_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

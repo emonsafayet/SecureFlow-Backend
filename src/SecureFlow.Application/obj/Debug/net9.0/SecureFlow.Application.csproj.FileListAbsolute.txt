@@ -1,0 +1,15 @@
+D:\BoilarPlat\SecureFlow\Backend\src\SecureFlow.Application\bin\Debug\net9.0\SecureFlow.Application.deps.json
+D:\BoilarPlat\SecureFlow\Backend\src\SecureFlow.Application\bin\Debug\net9.0\SecureFlow.Application.dll
+D:\BoilarPlat\SecureFlow\Backend\src\SecureFlow.Application\bin\Debug\net9.0\SecureFlow.Application.pdb
+D:\BoilarPlat\SecureFlow\Backend\src\SecureFlow.Application\bin\Debug\net9.0\SecureFlow.Domain.dll
+D:\BoilarPlat\SecureFlow\Backend\src\SecureFlow.Application\bin\Debug\net9.0\SecureFlow.Domain.pdb
+D:\BoilarPlat\SecureFlow\Backend\src\SecureFlow.Application\obj\Debug\net9.0\SecureFlow.Application.csproj.AssemblyReference.cache
+D:\BoilarPlat\SecureFlow\Backend\src\SecureFlow.Application\obj\Debug\net9.0\SecureFlow.Application.GeneratedMSBuildEditorConfig.editorconfig
+D:\BoilarPlat\SecureFlow\Backend\src\SecureFlow.Application\obj\Debug\net9.0\SecureFlow.Application.AssemblyInfoInputs.cache
+D:\BoilarPlat\SecureFlow\Backend\src\SecureFlow.Application\obj\Debug\net9.0\SecureFlow.Application.AssemblyInfo.cs
+D:\BoilarPlat\SecureFlow\Backend\src\SecureFlow.Application\obj\Debug\net9.0\SecureFlow.Application.csproj.CoreCompileInputs.cache
+D:\BoilarPlat\SecureFlow\Backend\src\SecureFlow.Application\obj\Debug\net9.0\SecureFl.23A37149.Up2Date
+D:\BoilarPlat\SecureFlow\Backend\src\SecureFlow.Application\obj\Debug\net9.0\SecureFlow.Application.dll
+D:\BoilarPlat\SecureFlow\Backend\src\SecureFlow.Application\obj\Debug\net9.0\refint\SecureFlow.Application.dll
+D:\BoilarPlat\SecureFlow\Backend\src\SecureFlow.Application\obj\Debug\net9.0\SecureFlow.Application.pdb
+D:\BoilarPlat\SecureFlow\Backend\src\SecureFlow.Application\obj\Debug\net9.0\ref\SecureFlow.Application.dll
