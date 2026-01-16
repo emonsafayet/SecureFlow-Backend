@@ -1,23 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "D:\\BoilarPlat\\SecureFlow\\SecureFlow-Backend\\src\\SecureFlow.Infrastructure\\SecureFlow.Infrastructure.csproj": {}
+    "C:\\BS23-Projects\\Project\\Boilerplate\\SecureFlow-Backend\\src\\SecureFlow.Infrastructure\\SecureFlow.Infrastructure.csproj": {}
   },
   "projects": {
-    "D:\\BoilarPlat\\SecureFlow\\SecureFlow-Backend\\src\\SecureFlow.Application\\SecureFlow.Application.csproj": {
+    "C:\\BS23-Projects\\Project\\Boilerplate\\SecureFlow-Backend\\src\\SecureFlow.Application\\SecureFlow.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\BoilarPlat\\SecureFlow\\SecureFlow-Backend\\src\\SecureFlow.Application\\SecureFlow.Application.csproj",
+        "projectUniqueName": "C:\\BS23-Projects\\Project\\Boilerplate\\SecureFlow-Backend\\src\\SecureFlow.Application\\SecureFlow.Application.csproj",
         "projectName": "SecureFlow.Application",
-        "projectPath": "D:\\BoilarPlat\\SecureFlow\\SecureFlow-Backend\\src\\SecureFlow.Application\\SecureFlow.Application.csproj",
-        "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
-        "outputPath": "D:\\BoilarPlat\\SecureFlow\\SecureFlow-Backend\\src\\SecureFlow.Application\\obj\\",
+        "projectPath": "C:\\BS23-Projects\\Project\\Boilerplate\\SecureFlow-Backend\\src\\SecureFlow.Application\\SecureFlow.Application.csproj",
+        "packagesPath": "C:\\Users\\BS01570\\.nuget\\packages\\",
+        "outputPath": "C:\\BS23-Projects\\Project\\Boilerplate\\SecureFlow-Backend\\src\\SecureFlow.Application\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\HP\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\BS01570\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -26,14 +26,15 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "D:\\BoilarPlat\\SecureFlow\\SecureFlow-Backend\\src\\SecureFlow.Domain\\SecureFlow.Domain.csproj": {
-                "projectPath": "D:\\BoilarPlat\\SecureFlow\\SecureFlow-Backend\\src\\SecureFlow.Domain\\SecureFlow.Domain.csproj"
+              "C:\\BS23-Projects\\Project\\Boilerplate\\SecureFlow-Backend\\src\\SecureFlow.Domain\\SecureFlow.Domain.csproj": {
+                "projectPath": "C:\\BS23-Projects\\Project\\Boilerplate\\SecureFlow-Backend\\src\\SecureFlow.Domain\\SecureFlow.Domain.csproj"
               }
             }
           }
@@ -83,24 +84,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.300/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.306/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\BoilarPlat\\SecureFlow\\SecureFlow-Backend\\src\\SecureFlow.Domain\\SecureFlow.Domain.csproj": {
+    "C:\\BS23-Projects\\Project\\Boilerplate\\SecureFlow-Backend\\src\\SecureFlow.Domain\\SecureFlow.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\BoilarPlat\\SecureFlow\\SecureFlow-Backend\\src\\SecureFlow.Domain\\SecureFlow.Domain.csproj",
+        "projectUniqueName": "C:\\BS23-Projects\\Project\\Boilerplate\\SecureFlow-Backend\\src\\SecureFlow.Domain\\SecureFlow.Domain.csproj",
         "projectName": "SecureFlow.Domain",
-        "projectPath": "D:\\BoilarPlat\\SecureFlow\\SecureFlow-Backend\\src\\SecureFlow.Domain\\SecureFlow.Domain.csproj",
-        "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
-        "outputPath": "D:\\BoilarPlat\\SecureFlow\\SecureFlow-Backend\\src\\SecureFlow.Domain\\obj\\",
+        "projectPath": "C:\\BS23-Projects\\Project\\Boilerplate\\SecureFlow-Backend\\src\\SecureFlow.Domain\\SecureFlow.Domain.csproj",
+        "packagesPath": "C:\\Users\\BS01570\\.nuget\\packages\\",
+        "outputPath": "C:\\BS23-Projects\\Project\\Boilerplate\\SecureFlow-Backend\\src\\SecureFlow.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\HP\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\BS01570\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -109,6 +110,7 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -148,24 +150,24 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.300/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.306/PortableRuntimeIdentifierGraph.json"
         }
       }
     },
-    "D:\\BoilarPlat\\SecureFlow\\SecureFlow-Backend\\src\\SecureFlow.Infrastructure\\SecureFlow.Infrastructure.csproj": {
+    "C:\\BS23-Projects\\Project\\Boilerplate\\SecureFlow-Backend\\src\\SecureFlow.Infrastructure\\SecureFlow.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\BoilarPlat\\SecureFlow\\SecureFlow-Backend\\src\\SecureFlow.Infrastructure\\SecureFlow.Infrastructure.csproj",
+        "projectUniqueName": "C:\\BS23-Projects\\Project\\Boilerplate\\SecureFlow-Backend\\src\\SecureFlow.Infrastructure\\SecureFlow.Infrastructure.csproj",
         "projectName": "SecureFlow.Infrastructure",
-        "projectPath": "D:\\BoilarPlat\\SecureFlow\\SecureFlow-Backend\\src\\SecureFlow.Infrastructure\\SecureFlow.Infrastructure.csproj",
-        "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
-        "outputPath": "D:\\BoilarPlat\\SecureFlow\\SecureFlow-Backend\\src\\SecureFlow.Infrastructure\\obj\\",
+        "projectPath": "C:\\BS23-Projects\\Project\\Boilerplate\\SecureFlow-Backend\\src\\SecureFlow.Infrastructure\\SecureFlow.Infrastructure.csproj",
+        "packagesPath": "C:\\Users\\BS01570\\.nuget\\packages\\",
+        "outputPath": "C:\\BS23-Projects\\Project\\Boilerplate\\SecureFlow-Backend\\src\\SecureFlow.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
         ],
         "configFilePaths": [
-          "C:\\Users\\HP\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\BS01570\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
@@ -174,17 +176,18 @@
         ],
         "sources": {
           "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "D:\\BoilarPlat\\SecureFlow\\SecureFlow-Backend\\src\\SecureFlow.Application\\SecureFlow.Application.csproj": {
-                "projectPath": "D:\\BoilarPlat\\SecureFlow\\SecureFlow-Backend\\src\\SecureFlow.Application\\SecureFlow.Application.csproj"
+              "C:\\BS23-Projects\\Project\\Boilerplate\\SecureFlow-Backend\\src\\SecureFlow.Application\\SecureFlow.Application.csproj": {
+                "projectPath": "C:\\BS23-Projects\\Project\\Boilerplate\\SecureFlow-Backend\\src\\SecureFlow.Application\\SecureFlow.Application.csproj"
               },
-              "D:\\BoilarPlat\\SecureFlow\\SecureFlow-Backend\\src\\SecureFlow.Domain\\SecureFlow.Domain.csproj": {
-                "projectPath": "D:\\BoilarPlat\\SecureFlow\\SecureFlow-Backend\\src\\SecureFlow.Domain\\SecureFlow.Domain.csproj"
+              "C:\\BS23-Projects\\Project\\Boilerplate\\SecureFlow-Backend\\src\\SecureFlow.Domain\\SecureFlow.Domain.csproj": {
+                "projectPath": "C:\\BS23-Projects\\Project\\Boilerplate\\SecureFlow-Backend\\src\\SecureFlow.Domain\\SecureFlow.Domain.csproj"
               }
             }
           }
@@ -254,7 +257,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.300/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.306/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
