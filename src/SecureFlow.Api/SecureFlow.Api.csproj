@@ -17,6 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\SecureFlow.Shared\SecureFlow.Shared.csproj" />
     <ProjectReference Include="..\SecureFlow.Application\SecureFlow.Application.csproj" />
     <ProjectReference Include="..\SecureFlow.Infrastructure\SecureFlow.Infrastructure.csproj" />
   </ItemGroup>

@@ -1,8 +1,11 @@
 ﻿using MediatR;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SecureFlow.Application.Auth.Login;
 using SecureFlow.Application.Auth.Users.Queries;
 using SecureFlow.Application.Users;
+using SecureFlow.Shared.Authorization;
+using System.Security;
 
 namespace SecureFlow.Api.Controllers;
 
@@ -24,6 +27,7 @@ public class AuthController : ControllerBase
         return Ok(result);
     }
 
+    [Authorize(Policy = nameof(Permissions.ViewUsers))] 
     [HttpGet("{userId:int}")]
     public async Task<ActionResult<UserDto>> GetUser(int userId)
     {

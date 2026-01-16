@@ -75,6 +75,16 @@ public class AppDbContext : DbContext, IAppDbContext
             .HasOne(ur => ur.Role)
             .WithMany()
             .HasForeignKey(ur => ur.RoleId);
+
+        modelBuilder.Entity<RolePermission>(entity =>
+        {
+            entity.HasKey(x => new { x.RoleId, x.Permission });
+
+            entity.Property(x => x.Permission)
+                  .HasMaxLength(200)
+                  .IsRequired();
+        }); 
+
     }
     private static LambdaExpression CreateIsDeletedFilter(Type type)
     {

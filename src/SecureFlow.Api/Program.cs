@@ -1,10 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
-using System.Text;
+using SecureFlow.Application;
+using SecureFlow.Application.Common.Authorization;
 using SecureFlow.Application.Common.Interfaces;
 using SecureFlow.Infrastructure;
 using SecureFlow.Infrastructure.Persistence;
-using SecureFlow.Application;
+using SecureFlow.Shared.Authorization;
+using Microsoft.AspNetCore.Authorization; 
+using System.Text;
 
 internal class Program
 {
@@ -21,7 +24,21 @@ internal class Program
         // DI
         builder.Services.AddApplication();
         builder.Services.AddInfrastructure(builder.Configuration);
-
+         
+        
+        builder.Services.AddAuthorization(options =>
+        {
+            foreach (var permission in Permissions.All)
+            {
+                options.AddPolicy(permission.Name, policy =>
+                {
+                    policy.Requirements.Add(
+                        new PermissionRequirement(permission.Name));
+                });
+            }
+        });
+        builder.Services.AddSingleton<IAuthorizationHandler, PermissionHandler>();
+        
         // JWT Authentication
         builder.Services.AddAuthentication(options =>
         {
@@ -46,7 +63,6 @@ internal class Program
                 ClockSkew = TimeSpan.Zero
             };
         });
-
         var app = builder.Build();
 
         // DB seed (dev only – later we’ll guard this)

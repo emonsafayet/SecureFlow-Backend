@@ -20,12 +20,27 @@ public class JwtTokenGenerator : IJwtTokenGenerator
 
     public string GenerateToken(User user)
     {
-        var claims = new[]
+        var claims = new List<Claim>
         {
-            new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()),
-            new Claim("userId", user.UserId.ToString()),
+            new Claim(JwtRegisteredClaimNames.Sub, user.Id.ToString()), // Guid
+            new Claim("userId", user.UserId.ToString()),                // int PK
             new Claim(JwtRegisteredClaimNames.Email, user.Email)
         };
+
+        // Permission claims
+        if (user.UserRoles != null)
+        {
+            var permissions = user.UserRoles
+                .Where(ur => ur.Role != null)
+                .SelectMany(ur => ur.Role!.Permissions)
+                .Select(p => p.Permission)
+                .Distinct();
+
+            foreach (var permission in permissions)
+            {
+                claims.Add(new Claim("permission", permission));
+            }
+        }
 
         var key = new SymmetricSecurityKey(
             Encoding.UTF8.GetBytes(_configuration["Jwt:Key"]!));
