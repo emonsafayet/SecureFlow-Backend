@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "jaeFXLH6Xuc=",
+  "dgSpecHash": "ueTS0+uoMLA=",
   "success": true,
-  "projectFilePath": "D:\\BoilarPlat\\SecureFlow\\Backend\\src\\SecureFlow.Api\\SecureFlow.Api.csproj",
+  "projectFilePath": "D:\\BoilarPlat\\SecureFlow\\SecureFlow-Backend\\src\\SecureFlow.Api\\SecureFlow.Api.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\HP\\.nuget\\packages\\automapper\\16.0.0\\automapper.16.0.0.nupkg.sha512",
     "C:\\Users\\HP\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\11.0.0\\automapper.extensions.microsoft.dependencyinjection.11.0.0.nupkg.sha512",

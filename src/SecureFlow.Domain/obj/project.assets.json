@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\BoilarPlat\\SecureFlow\\Backend\\src\\SecureFlow.Domain\\SecureFlow.Domain.csproj",
+      "projectUniqueName": "D:\\BoilarPlat\\SecureFlow\\SecureFlow-Backend\\src\\SecureFlow.Domain\\SecureFlow.Domain.csproj",
       "projectName": "SecureFlow.Domain",
-      "projectPath": "D:\\BoilarPlat\\SecureFlow\\Backend\\src\\SecureFlow.Domain\\SecureFlow.Domain.csproj",
+      "projectPath": "D:\\BoilarPlat\\SecureFlow\\SecureFlow-Backend\\src\\SecureFlow.Domain\\SecureFlow.Domain.csproj",
       "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
-      "outputPath": "D:\\BoilarPlat\\SecureFlow\\Backend\\src\\SecureFlow.Domain\\obj\\",
+      "outputPath": "D:\\BoilarPlat\\SecureFlow\\SecureFlow-Backend\\src\\SecureFlow.Domain\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

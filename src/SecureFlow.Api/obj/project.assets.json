@@ -5086,11 +5086,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "D:\\BoilarPlat\\SecureFlow\\Backend\\src\\SecureFlow.Api\\SecureFlow.Api.csproj",
+      "projectUniqueName": "D:\\BoilarPlat\\SecureFlow\\SecureFlow-Backend\\src\\SecureFlow.Api\\SecureFlow.Api.csproj",
       "projectName": "SecureFlow.Api",
-      "projectPath": "D:\\BoilarPlat\\SecureFlow\\Backend\\src\\SecureFlow.Api\\SecureFlow.Api.csproj",
+      "projectPath": "D:\\BoilarPlat\\SecureFlow\\SecureFlow-Backend\\src\\SecureFlow.Api\\SecureFlow.Api.csproj",
       "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
-      "outputPath": "D:\\BoilarPlat\\SecureFlow\\Backend\\src\\SecureFlow.Api\\obj\\",
+      "outputPath": "D:\\BoilarPlat\\SecureFlow\\SecureFlow-Backend\\src\\SecureFlow.Api\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -5111,11 +5111,11 @@
         "net9.0": {
           "targetAlias": "net9.0",
           "projectReferences": {
-            "D:\\BoilarPlat\\SecureFlow\\Backend\\src\\SecureFlow.Application\\SecureFlow.Application.csproj": {
-              "projectPath": "D:\\BoilarPlat\\SecureFlow\\Backend\\src\\SecureFlow.Application\\SecureFlow.Application.csproj"
+            "D:\\BoilarPlat\\SecureFlow\\SecureFlow-Backend\\src\\SecureFlow.Application\\SecureFlow.Application.csproj": {
+              "projectPath": "D:\\BoilarPlat\\SecureFlow\\SecureFlow-Backend\\src\\SecureFlow.Application\\SecureFlow.Application.csproj"
             },
-            "D:\\BoilarPlat\\SecureFlow\\Backend\\src\\SecureFlow.Infrastructure\\SecureFlow.Infrastructure.csproj": {
-              "projectPath": "D:\\BoilarPlat\\SecureFlow\\Backend\\src\\SecureFlow.Infrastructure\\SecureFlow.Infrastructure.csproj"
+            "D:\\BoilarPlat\\SecureFlow\\SecureFlow-Backend\\src\\SecureFlow.Infrastructure\\SecureFlow.Infrastructure.csproj": {
+              "projectPath": "D:\\BoilarPlat\\SecureFlow\\SecureFlow-Backend\\src\\SecureFlow.Infrastructure\\SecureFlow.Infrastructure.csproj"
             }
           }
         }

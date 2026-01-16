@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "kbfcZiwvIMQ=",
+  "dgSpecHash": "C5yfvWDAJxM=",
   "success": true,
-  "projectFilePath": "D:\\BoilarPlat\\SecureFlow\\Backend\\src\\SecureFlow.Domain\\SecureFlow.Domain.csproj",
+  "projectFilePath": "D:\\BoilarPlat\\SecureFlow\\SecureFlow-Backend\\src\\SecureFlow.Domain\\SecureFlow.Domain.csproj",
   "expectedPackageFiles": [],
   "logs": []
 }

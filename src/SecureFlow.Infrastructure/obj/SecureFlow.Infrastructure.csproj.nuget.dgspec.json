@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\BoilarPlat\\SecureFlow\\Backend\\src\\SecureFlow.Infrastructure\\SecureFlow.Infrastructure.csproj": {}
+    "D:\\BoilarPlat\\SecureFlow\\SecureFlow-Backend\\src\\SecureFlow.Infrastructure\\SecureFlow.Infrastructure.csproj": {}
   },
   "projects": {
-    "D:\\BoilarPlat\\SecureFlow\\Backend\\src\\SecureFlow.Application\\SecureFlow.Application.csproj": {
+    "D:\\BoilarPlat\\SecureFlow\\SecureFlow-Backend\\src\\SecureFlow.Application\\SecureFlow.Application.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\BoilarPlat\\SecureFlow\\Backend\\src\\SecureFlow.Application\\SecureFlow.Application.csproj",
+        "projectUniqueName": "D:\\BoilarPlat\\SecureFlow\\SecureFlow-Backend\\src\\SecureFlow.Application\\SecureFlow.Application.csproj",
         "projectName": "SecureFlow.Application",
-        "projectPath": "D:\\BoilarPlat\\SecureFlow\\Backend\\src\\SecureFlow.Application\\SecureFlow.Application.csproj",
+        "projectPath": "D:\\BoilarPlat\\SecureFlow\\SecureFlow-Backend\\src\\SecureFlow.Application\\SecureFlow.Application.csproj",
         "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
-        "outputPath": "D:\\BoilarPlat\\SecureFlow\\Backend\\src\\SecureFlow.Application\\obj\\",
+        "outputPath": "D:\\BoilarPlat\\SecureFlow\\SecureFlow-Backend\\src\\SecureFlow.Application\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -32,8 +32,8 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "D:\\BoilarPlat\\SecureFlow\\Backend\\src\\SecureFlow.Domain\\SecureFlow.Domain.csproj": {
-                "projectPath": "D:\\BoilarPlat\\SecureFlow\\Backend\\src\\SecureFlow.Domain\\SecureFlow.Domain.csproj"
+              "D:\\BoilarPlat\\SecureFlow\\SecureFlow-Backend\\src\\SecureFlow.Domain\\SecureFlow.Domain.csproj": {
+                "projectPath": "D:\\BoilarPlat\\SecureFlow\\SecureFlow-Backend\\src\\SecureFlow.Domain\\SecureFlow.Domain.csproj"
               }
             }
           }
@@ -87,14 +87,14 @@
         }
       }
     },
-    "D:\\BoilarPlat\\SecureFlow\\Backend\\src\\SecureFlow.Domain\\SecureFlow.Domain.csproj": {
+    "D:\\BoilarPlat\\SecureFlow\\SecureFlow-Backend\\src\\SecureFlow.Domain\\SecureFlow.Domain.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\BoilarPlat\\SecureFlow\\Backend\\src\\SecureFlow.Domain\\SecureFlow.Domain.csproj",
+        "projectUniqueName": "D:\\BoilarPlat\\SecureFlow\\SecureFlow-Backend\\src\\SecureFlow.Domain\\SecureFlow.Domain.csproj",
         "projectName": "SecureFlow.Domain",
-        "projectPath": "D:\\BoilarPlat\\SecureFlow\\Backend\\src\\SecureFlow.Domain\\SecureFlow.Domain.csproj",
+        "projectPath": "D:\\BoilarPlat\\SecureFlow\\SecureFlow-Backend\\src\\SecureFlow.Domain\\SecureFlow.Domain.csproj",
         "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
-        "outputPath": "D:\\BoilarPlat\\SecureFlow\\Backend\\src\\SecureFlow.Domain\\obj\\",
+        "outputPath": "D:\\BoilarPlat\\SecureFlow\\SecureFlow-Backend\\src\\SecureFlow.Domain\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -152,14 +152,14 @@
         }
       }
     },
-    "D:\\BoilarPlat\\SecureFlow\\Backend\\src\\SecureFlow.Infrastructure\\SecureFlow.Infrastructure.csproj": {
+    "D:\\BoilarPlat\\SecureFlow\\SecureFlow-Backend\\src\\SecureFlow.Infrastructure\\SecureFlow.Infrastructure.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\BoilarPlat\\SecureFlow\\Backend\\src\\SecureFlow.Infrastructure\\SecureFlow.Infrastructure.csproj",
+        "projectUniqueName": "D:\\BoilarPlat\\SecureFlow\\SecureFlow-Backend\\src\\SecureFlow.Infrastructure\\SecureFlow.Infrastructure.csproj",
         "projectName": "SecureFlow.Infrastructure",
-        "projectPath": "D:\\BoilarPlat\\SecureFlow\\Backend\\src\\SecureFlow.Infrastructure\\SecureFlow.Infrastructure.csproj",
+        "projectPath": "D:\\BoilarPlat\\SecureFlow\\SecureFlow-Backend\\src\\SecureFlow.Infrastructure\\SecureFlow.Infrastructure.csproj",
         "packagesPath": "C:\\Users\\HP\\.nuget\\packages\\",
-        "outputPath": "D:\\BoilarPlat\\SecureFlow\\Backend\\src\\SecureFlow.Infrastructure\\obj\\",
+        "outputPath": "D:\\BoilarPlat\\SecureFlow\\SecureFlow-Backend\\src\\SecureFlow.Infrastructure\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -180,11 +180,11 @@
           "net9.0": {
             "targetAlias": "net9.0",
             "projectReferences": {
-              "D:\\BoilarPlat\\SecureFlow\\Backend\\src\\SecureFlow.Application\\SecureFlow.Application.csproj": {
-                "projectPath": "D:\\BoilarPlat\\SecureFlow\\Backend\\src\\SecureFlow.Application\\SecureFlow.Application.csproj"
+              "D:\\BoilarPlat\\SecureFlow\\SecureFlow-Backend\\src\\SecureFlow.Application\\SecureFlow.Application.csproj": {
+                "projectPath": "D:\\BoilarPlat\\SecureFlow\\SecureFlow-Backend\\src\\SecureFlow.Application\\SecureFlow.Application.csproj"
               },
-              "D:\\BoilarPlat\\SecureFlow\\Backend\\src\\SecureFlow.Domain\\SecureFlow.Domain.csproj": {
-                "projectPath": "D:\\BoilarPlat\\SecureFlow\\Backend\\src\\SecureFlow.Domain\\SecureFlow.Domain.csproj"
+              "D:\\BoilarPlat\\SecureFlow\\SecureFlow-Backend\\src\\SecureFlow.Domain\\SecureFlow.Domain.csproj": {
+                "projectPath": "D:\\BoilarPlat\\SecureFlow\\SecureFlow-Backend\\src\\SecureFlow.Domain\\SecureFlow.Domain.csproj"
               }
             }
           }
