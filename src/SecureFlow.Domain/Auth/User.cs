@@ -5,7 +5,7 @@ using SecureFlow.Domain.Enums;
 
 namespace SecureFlow.Domain.Auth;
 
-public class User : AuditableSoftDeleteEntity , IAuthEntity
+public class User : AuditableSoftDeleteEntity , IAuditableEntity, IAuthEntity
 {
     public Guid UserId { get;  set; } = Guid.NewGuid(); // public-safe ID       
     public string? FirstName { get; set; }

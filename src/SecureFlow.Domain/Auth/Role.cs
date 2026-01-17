@@ -3,7 +3,7 @@ using SecureFlow.Domain.Common.Markers;
 
 namespace SecureFlow.Domain.Auth;
 
-public class Role : BaseEntity, IAuthEntity
+public class Role : BaseEntity, IAuditableEntity, IAuthEntity
 {
     public string Name { get; set; } = default!;
     public string? Description { get; set; }

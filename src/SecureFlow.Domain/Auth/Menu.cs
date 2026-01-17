@@ -3,7 +3,7 @@ using SecureFlow.Domain.Common.Markers;
 
 namespace SecureFlow.Domain.Auth;
 
-public class Menu : AuditableSoftDeleteEntity, IAuthEntity
+public class Menu : AuditableSoftDeleteEntity, IAuditableEntity, IAuthEntity
 {
     public string Name { get; set; } = default!;
     public string? Url { get; set; }

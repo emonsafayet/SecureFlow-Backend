@@ -1,9 +1,12 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
 using SecureFlow.Application.Common.Interfaces;
 using SecureFlow.Domain.Auth;
 using SecureFlow.Domain.Common.Abstractions;
 using SecureFlow.Domain.Common.Markers;
 using System.Linq.Expressions;
+using System.Security.AccessControl;
+using System.Text.Json;
 
 namespace SecureFlow.Infrastructure.Persistence;
 
@@ -23,7 +26,7 @@ public class AppDbContext : DbContext, IAppDbContext
     public DbSet<RolePermission> RolePermissions => Set<RolePermission>();
     public DbSet<Menu> Menus => Set<Menu>();
     public DbSet<MenuPermission> MenuPermissions => Set<MenuPermission>();
-
+    public DbSet<AuditLog> AuditLogs => Set<AuditLog>();
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -140,24 +143,67 @@ public class AppDbContext : DbContext, IAppDbContext
     CancellationToken cancellationToken = default)
     {
         var now = DateTime.UtcNow;
-        var userId = _currentUser?.UserId ?? 0;
+        var userId = _currentUser.UserId;
 
-        foreach (var entry in ChangeTracker.Entries<IAuditable>())
+        var auditLogs = new List<AuditLog>();
+
+        foreach (var entry in ChangeTracker.Entries<IAuditableEntity>())
         {
-            if (entry.State == EntityState.Added)
+            if (entry.State == EntityState.Added ||
+                entry.State == EntityState.Modified ||
+                entry.State == EntityState.Deleted)
             {
-                entry.Entity.CreatedOn = now;
-                entry.Entity.CreatedBy = userId;
-            }
-            else if (entry.State == EntityState.Modified)
-            {
-                entry.Entity.LastModifiedOn = now;
-                entry.Entity.LastModifiedBy = userId;
+                var audit = new AuditLog
+                {
+                    EntityName = entry.Entity.GetType().Name,
+                    EntityId = entry.Properties
+                        .First(p => p.Metadata.IsPrimaryKey())
+                        .CurrentValue?.ToString() ?? "",
+                    Action = entry.State.ToString(),
+                    UserId = userId,
+                    CreatedOn = now
+                };
+
+                if (entry.State == EntityState.Modified)
+                {
+                    audit.OldValues = Serialize(entry.OriginalValues);
+                    audit.NewValues = Serialize(entry.CurrentValues);
+                }
+
+                if (entry.State == EntityState.Added)
+                {
+                    audit.NewValues = Serialize(entry.CurrentValues);
+                }
+
+                if (entry.State == EntityState.Deleted)
+                {
+                    audit.OldValues = Serialize(entry.OriginalValues);
+                }
+
+                auditLogs.Add(audit);
             }
         }
 
-        return await base.SaveChangesAsync(cancellationToken);
+        var result = await base.SaveChangesAsync(cancellationToken);
+
+        if (auditLogs.Any())
+        {
+            AuditLogs.AddRange(auditLogs);
+            await base.SaveChangesAsync(cancellationToken);
+        }
+
+        return result;
     }
+
+    //Helper Method:
+    private static string Serialize(PropertyValues values)
+    {
+        var dict = values.Properties
+            .ToDictionary(p => p.Name, p => values[p]?.ToString());
+
+        return JsonSerializer.Serialize(dict);
+    }
+
 
 
 }

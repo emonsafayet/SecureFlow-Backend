@@ -10,8 +10,7 @@ using SecureFlow.Infrastructure.Persistence;
 using SecureFlow.Shared.Authorization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
-using Serilog;
-using SecureFlow.Api.Middleware;
+using Serilog; 
 public class Program
 {
     public static async Task Main(string[] args)
