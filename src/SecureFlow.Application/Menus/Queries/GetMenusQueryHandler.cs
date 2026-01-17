@@ -3,11 +3,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using SecureFlow.Application.Common.Interfaces;
 using SecureFlow.Application.Common.Caching;
+using SecureFlow.Application.Common.Models;
 
 namespace SecureFlow.Application.Menus.Queries.GetMenus;
 
 public class GetMenusQueryHandler
-    : IRequestHandler<GetMenusQuery, List<MenuDto>>
+    : IRequestHandler<GetMenusQuery, Result<List<MenuDto>>>
 {
     private readonly IAppDbContext _db;
     private readonly ICurrentUserService _currentUser;
@@ -26,27 +27,33 @@ public class GetMenusQueryHandler
         _cacheOptions = cacheOptions.Value;
     }
 
-    public async Task<List<MenuDto>> Handle(
+    public async Task<Result<List<MenuDto>>> Handle(
         GetMenusQuery request,
         CancellationToken cancellationToken)
-    { 
-
-        var permissions = _currentUser.Permissions
+    {
+        // 0️⃣ Guard: user must have permissions
+        var userPermissions = _currentUser.Permissions
             .OrderBy(p => p)
             .ToArray();
 
-        var permissionHash = string.Join("|", permissions);
+        if (userPermissions.Length == 0)
+        {
+            return Result<List<MenuDto>>.Failure(
+                "User has no permissions assigned");
+        }
+
+        // 1️ Build cache key
+        var permissionHash = string.Join("|", userPermissions);
         var cacheKey = CacheKeys.MenusByPermissions(permissionHash);
 
-
-        // 1️ Redis first
+        // 2️ Redis first
         var cached = await _cache.GetAsync<List<MenuDto>>(cacheKey);
         if (cached != null)
-            return cached;
+        {
+            return Result<List<MenuDto>>.Success(cached);
+        }
 
-        // 2️ DB
-        var userPermissions = _currentUser.Permissions;
-
+        // 3️ DB
         var menus = await _db.Menus
             .AsNoTracking()
             .Where(m =>
@@ -62,12 +69,12 @@ public class GetMenusQueryHandler
             })
             .ToListAsync(cancellationToken);
 
-        // 3️ Cache with configurable TTL
+        // 4️ Cache result
         await _cache.SetAsync(
             cacheKey,
             menus,
             TimeSpan.FromMinutes(_cacheOptions.DefaultExpirationMinutes));
 
-        return menus;
+        return Result<List<MenuDto>>.Success(menus);
     }
 }

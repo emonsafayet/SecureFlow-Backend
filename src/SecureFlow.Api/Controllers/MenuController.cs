@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SecureFlow.Application.Authorization;
+using SecureFlow.Application.Menus.Queries.GetMenus;
 using SecureFlow.Shared.Authorization;
 
 [Authorize]
@@ -21,6 +22,9 @@ public class MenuController : ControllerBase
     public async Task<IActionResult> GetMenus()
     {
         var result = await _mediator.Send(new GetMenusQuery());
-        return Ok(result);
+
+        return result.IsSuccess
+            ? Ok(result)
+            : Forbid();
     }
 }
