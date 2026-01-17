@@ -28,4 +28,8 @@
     <ProjectReference Include="..\SecureFlow.Infrastructure\SecureFlow.Infrastructure.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Logs\" />
+  </ItemGroup>
+
 </Project>

@@ -29,9 +29,15 @@ public class GetMenusQueryHandler
     public async Task<List<MenuDto>> Handle(
         GetMenusQuery request,
         CancellationToken cancellationToken)
-    {
-        var userId = _currentUser.UserId;
-        var cacheKey = $"menus:user:{userId}";
+    { 
+
+        var permissions = _currentUser.Permissions
+            .OrderBy(p => p)
+            .ToArray();
+
+        var permissionHash = string.Join("|", permissions);
+        var cacheKey = CacheKeys.MenusByPermissions(permissionHash);
+
 
         // 1️ Redis first
         var cached = await _cache.GetAsync<List<MenuDto>>(cacheKey);
