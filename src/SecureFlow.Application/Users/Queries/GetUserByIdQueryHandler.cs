@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using MediatR;
+using SecureFlow.Application.Common.Exceptions;
 using SecureFlow.Application.Common.Interfaces;
 using SecureFlow.Application.Users;
 using SecureFlow.Domain.Auth;
@@ -25,7 +26,7 @@ public class GetUserByIdQueryHandler
         CancellationToken ct)
     {
         var user = await _users.GetByIdAsync(request.UserId, ct)
-            ?? throw new KeyNotFoundException("User not found");
+            ?? throw new NotFoundException("User not found");
 
         return _mapper.Map<UserDto>(user);
     }

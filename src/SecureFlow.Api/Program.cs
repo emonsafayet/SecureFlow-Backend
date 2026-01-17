@@ -11,6 +11,7 @@ using SecureFlow.Shared.Authorization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using Serilog;
+using SecureFlow.Api.Middleware;
 public class Program
 {
     public static async Task Main(string[] args)
@@ -158,6 +159,7 @@ public class Program
         
 
         app.UseHttpsRedirection();
+        app.UseMiddleware<ExceptionHandlingMiddleware>();
 
         app.UseAuthentication();   // MUST be first
         app.UseAuthorization();    // MUST be after authentication

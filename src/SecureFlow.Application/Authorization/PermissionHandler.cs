@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Authorization;
+using SecureFlow.Application.Common.Exceptions;
 
 namespace SecureFlow.Application.Common.Authorization;
 
@@ -19,6 +20,7 @@ public class PermissionHandler
         {
             context.Succeed(requirement);
         }
+        else throw new ForbiddenException("Access denied");
 
         return Task.CompletedTask;
     }
