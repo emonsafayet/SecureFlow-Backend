@@ -1,6 +1,7 @@
 ﻿using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using SecureFlow.Application.Authorization;
 using SecureFlow.Shared.Authorization;
 
 [Authorize]
@@ -15,7 +16,7 @@ public class MenuController : ControllerBase
         _mediator = mediator;
     }
 
-    [Authorize(Policy = nameof(Permissions.ViewUsers))]
+    [AuthorizePermission(Actions.View, Resources.Users)]
     [HttpGet]
     public async Task<IActionResult> GetMenus()
     {

@@ -12,7 +12,7 @@ public class PermissionHandler
         var hasPermission = context.User
             .Claims
             .Any(c =>
-                c.Type == "permission" &&
+                c.Type == "permissions" &&
                 c.Value == requirement.Permission);
 
         if (hasPermission)

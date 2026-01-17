@@ -1,14 +1,15 @@
 ﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.IdentityModel.Tokens;
+using Microsoft.OpenApi.Models;
 using SecureFlow.Application;
 using SecureFlow.Application.Common.Authorization;
 using SecureFlow.Application.Common.Interfaces;
 using SecureFlow.Infrastructure;
 using SecureFlow.Infrastructure.Persistence;
 using SecureFlow.Shared.Authorization;
-using Microsoft.AspNetCore.Authorization; 
-using System.Text;
 using System.IdentityModel.Tokens.Jwt;
+using System.Text;
 
 public class Program
 {
@@ -16,17 +17,84 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
 
+        // --------------------------------------------------
+        // Controllers
+        // --------------------------------------------------
         builder.Services.AddControllers();
 
-        // Swagger (Swashbuckle ONLY)
+        // --------------------------------------------------
+        // Swagger (ONCE, WITH JWT SUPPORT)
+        // --------------------------------------------------
         builder.Services.AddEndpointsApiExplorer();
-        builder.Services.AddSwaggerGen();
+        builder.Services.AddSwaggerGen(c =>
+        {
+            c.SwaggerDoc("v1", new OpenApiInfo
+            {
+                Title = "SecureFlow API",
+                Version = "v1"
+            });
 
-        // DI
+            c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+            {
+                Name = "Authorization",
+                Type = SecuritySchemeType.Http,
+                Scheme = "Bearer",
+                BearerFormat = "JWT",
+                In = ParameterLocation.Header,
+                Description = "Enter: Bearer {your JWT token}"
+            });
+
+            c.AddSecurityRequirement(new OpenApiSecurityRequirement
+            {
+                {
+                    new OpenApiSecurityScheme
+                    {
+                        Reference = new OpenApiReference
+                        {
+                            Type = ReferenceType.SecurityScheme,
+                            Id = "Bearer"
+                        }
+                    },
+                    Array.Empty<string>()
+                }
+            });
+        });
+
+        // --------------------------------------------------
+        // Application & Infrastructure DI
+        // --------------------------------------------------
         builder.Services.AddApplication();
         builder.Services.AddInfrastructure(builder.Configuration);
-         
-        
+
+        // --------------------------------------------------
+        // JWT Authentication (MUST COME BEFORE AUTHORIZATION)
+        // --------------------------------------------------
+        builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+
+                    ValidIssuer = builder.Configuration["Jwt:Issuer"],
+                    ValidAudience = builder.Configuration["Jwt:Audience"],
+
+                    IssuerSigningKey = new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)
+                    ),
+
+                    // IMPORTANT for CurrentUserService
+                    NameClaimType = JwtRegisteredClaimNames.Sub,
+                    ClockSkew = TimeSpan.Zero
+                };
+            });
+
+        // --------------------------------------------------
+        // Permission-based Authorization Policies
+        // --------------------------------------------------
         builder.Services.AddAuthorization(options =>
         {
             foreach (var permission in Permissions.All)
@@ -39,34 +107,14 @@ public class Program
             }
         });
         builder.Services.AddSingleton<IAuthorizationHandler, PermissionHandler>();
-        
-        // JWT Authentication
-        builder.Services.AddAuthentication(options =>
-        {
-            options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-            options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-        })
-        .AddJwtBearer(options =>
-        {
-            options.TokenValidationParameters = new TokenValidationParameters
-            {
-                ValidateIssuer = true,
-                ValidateAudience = true,
-                ValidateLifetime = true,
-                ValidateIssuerSigningKey = true,
-
-                ValidIssuer = builder.Configuration["Jwt:Issuer"],
-                ValidAudience = builder.Configuration["Jwt:Audience"],
-                IssuerSigningKey = new SymmetricSecurityKey(
-                    Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)
-                ),
-                NameClaimType = JwtRegisteredClaimNames.Sub, //This helps CurrentUserService consistently read UserId.
-                ClockSkew = TimeSpan.Zero
-            };
-        });
+        // --------------------------------------------------
+        // Build app
+        // --------------------------------------------------
         var app = builder.Build();
 
-        // DB seed (dev only – later we’ll guard this)
+        // --------------------------------------------------
+        // Database Seed (DEV ONLY)
+        // --------------------------------------------------
         using (var scope = app.Services.CreateScope())
         {
             var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
@@ -74,6 +122,9 @@ public class Program
             await AppDbContextSeed.SeedAsync(context, hasher);
         }
 
+        // --------------------------------------------------
+        // Middleware pipeline
+        // --------------------------------------------------
         if (app.Environment.IsDevelopment())
         {
             app.UseSwagger();
@@ -86,8 +137,8 @@ public class Program
 
         app.UseHttpsRedirection();
 
-        app.UseAuthentication();
-        app.UseAuthorization();
+        app.UseAuthentication();   // MUST be first
+        app.UseAuthorization();    // MUST be after authentication
 
         app.MapControllers();
 

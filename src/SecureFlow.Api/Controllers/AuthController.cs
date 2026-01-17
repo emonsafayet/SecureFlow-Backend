@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SecureFlow.Application.Auth.Login;
 using SecureFlow.Application.Auth.Users.Queries;
+using SecureFlow.Application.Authorization;
 using SecureFlow.Application.Users;
 using SecureFlow.Shared.Authorization;
 using System.Security;
@@ -26,8 +27,8 @@ public class AuthController : ControllerBase
         var result = await _mediator.Send(command);
         return Ok(result);
     }
-
-    [Authorize(Policy = nameof(Permissions.ViewUsers))] 
+     
+    [AuthorizePermission(Actions.View, Resources.Users)]
     [HttpGet("{userId:int}")]
     public async Task<ActionResult<UserDto>> GetUser(int userId)
     {

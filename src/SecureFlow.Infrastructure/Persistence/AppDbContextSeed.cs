@@ -161,13 +161,15 @@ public static class AppDbContextSeed
         {
             Name = "Dashboard",
             Url = "/dashboard",
-            Order = 1
+            Order = 1,
+            IsActive =true
         },
         new Menu
         {
             Name = "Users",
             Url = "/users",
-            Order = 2
+            Order = 2,
+            IsActive =true
         }
     };
 
