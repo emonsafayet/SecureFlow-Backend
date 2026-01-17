@@ -10,17 +10,32 @@ using SecureFlow.Infrastructure.Persistence;
 using SecureFlow.Shared.Authorization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
-
+using Serilog;
 public class Program
 {
     public static async Task Main(string[] args)
     {
+        // Logging file created here to capture startup logs
+        Log.Logger = new LoggerConfiguration()
+                        .MinimumLevel.Information()
+                        .Enrich.FromLogContext()
+                        .WriteTo.Console()
+                        .WriteTo.File(
+                            "Logs/secureflow-.txt",
+                            rollingInterval: RollingInterval.Day)
+                        .CreateLogger();
+
         var builder = WebApplication.CreateBuilder(args);
 
         // --------------------------------------------------
-        // Controllers
+        // Attach Serilog to ASP .NET pipeline
         // --------------------------------------------------
         builder.Services.AddControllers();
+
+        // --------------------------------------------------
+        // Logger
+        // --------------------------------------------------
+        builder.Host.UseSerilog();
 
         // --------------------------------------------------
         // Swagger (ONCE, WITH JWT SUPPORT)
@@ -107,9 +122,13 @@ public class Program
             }
         });
         builder.Services.AddSingleton<IAuthorizationHandler, PermissionHandler>();
+         
+
         // --------------------------------------------------
         // Build app
         // --------------------------------------------------
+
+
         var app = builder.Build();
 
         // --------------------------------------------------
@@ -134,6 +153,9 @@ public class Program
                 c.RoutePrefix = "swagger";
             });
         }
+
+    
+        
 
         app.UseHttpsRedirection();
 
