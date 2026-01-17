@@ -1,4 +1,4 @@
-﻿using MediatR;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using SecureFlow.Application.Auth.DTOs;
 using SecureFlow.Application.Common.Interfaces;
@@ -26,6 +26,10 @@ public class LoginCommandHandler : IRequestHandler<LoginCommand, LoginResponseDt
         CancellationToken cancellationToken)
     {
         var user = await _db.Users
+            .Include(u => u.UserRoles)
+                .ThenInclude(ur => ur.Role)
+                    .ThenInclude(r => r.RolePermissions)
+                        .ThenInclude(rp => rp.Permission)
             .FirstOrDefaultAsync(x => x.Email == request.Email, cancellationToken);
 
         if (user == null || !_hasher.Verify(user.PasswordHash, request.Password))

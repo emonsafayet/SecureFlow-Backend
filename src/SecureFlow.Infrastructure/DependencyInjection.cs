@@ -60,8 +60,10 @@ public static class DependencyInjection
                 configuration.GetConnectionString("Redis")!,
                 true);
 
+            options.Ssl = true;
             options.AbortOnConnectFail = false;
             options.ConnectRetry = 5;
+            options.ReconnectRetryPolicy = new ExponentialRetry(5000);
 
             return ConnectionMultiplexer.Connect(options);
         });

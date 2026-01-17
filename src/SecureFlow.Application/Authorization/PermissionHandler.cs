@@ -1,4 +1,4 @@
-﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Authorization;
 
 namespace SecureFlow.Application.Common.Authorization;
 
@@ -12,7 +12,7 @@ public class PermissionHandler
         var hasPermission = context.User
             .Claims
             .Any(c =>
-                c.Type == "permissions" &&
+                c.Type == "permission" &&
                 c.Value == requirement.Permission);
 
         if (hasPermission)
