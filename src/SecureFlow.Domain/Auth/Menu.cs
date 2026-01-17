@@ -7,6 +7,7 @@ public class Menu : AuditableSoftDeleteEntity, IAuthEntity
 {
     public string Name { get; set; } = default!;
     public string? Url { get; set; }
+    public bool IsActive { get; set; }=true;
     public int Order { get; set; }
 
     public ICollection<MenuPermission> MenuPermissions { get; set; }

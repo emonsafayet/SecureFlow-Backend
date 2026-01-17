@@ -14,14 +14,25 @@ public static class AppDbContextSeed
         // 1️ Permissions
         await SeedPermissionsAsync(context);
 
-        // 2️ Roles
+        // 2 ️ Seed Menus
+        await SeedMenusAsync(context);
+
+        // 3 Seed Menu Permissions
+        await SeedMenuPermissionsAsync(context);
+
+        // 4 Roles
         await SeedRolesAsync(context);
 
-        // 3️ Admin user
+        // 5 Admin user
         await SeedAdminUserAsync(context, passwordHasher);
 
-        // 4️ Assign ALL permissions to Admin role
+        // 6 Assign Admin role to Admin user
+        await SeedAdminUserRoleAsync(context);
+
+        // 7 Assign ALL permissions to Admin role
         await SeedAdminRolePermissionsAsync(context);
+
+      
     }
 
     // -------------------------------
@@ -83,6 +94,29 @@ public static class AppDbContextSeed
         db.Users.Add(admin);
         await db.SaveChangesAsync();
     }
+    // -------------------------------
+    // ADMIN USER → ADMIN ROLE
+    // -------------------------------
+    private static async Task SeedAdminUserRoleAsync(AppDbContext db)
+    {
+        var adminUser = await db.Users.FirstOrDefaultAsync();
+        var adminRole = await db.Roles.FirstOrDefaultAsync(r => r.Name == "Admin");
+
+        if (adminUser == null || adminRole == null)
+            return;
+
+        if (await db.UserRoles.AnyAsync(ur =>
+            ur.UserId == adminUser.Id && ur.RoleId == adminRole.Id))
+            return;
+
+        db.UserRoles.Add(new UserRole
+        {
+            UserId = adminUser.Id,
+            RoleId = adminRole.Id
+        });
+
+        await db.SaveChangesAsync();
+    }
 
     // -------------------------------
     // ADMIN ROLE → ALL PERMISSIONS
@@ -112,4 +146,68 @@ public static class AppDbContextSeed
 
         await db.SaveChangesAsync();
     }
+
+    // -------------------------------
+    // SEED MENUS
+    // -------------------------------
+    private static async Task SeedMenusAsync(AppDbContext db)
+    {
+        if (await db.Menus.AnyAsync())
+            return;
+
+        var menus = new List<Menu>
+    {
+        new Menu
+        {
+            Name = "Dashboard",
+            Url = "/dashboard",
+            Order = 1
+        },
+        new Menu
+        {
+            Name = "Users",
+            Url = "/users",
+            Order = 2
+        }
+    };
+
+        db.Menus.AddRange(menus);
+        await db.SaveChangesAsync();
+    }
+
+
+    // -------------------------------
+    // MENUS PERMISSIONS
+    // -------------------------------
+    private static async Task SeedMenuPermissionsAsync(AppDbContext db)
+    {
+        if (db.MenuPermissions.Any())
+            return;
+
+        var dashboard = await db.Menus.FirstAsync(m => m.Name == "Dashboard");
+        var users = await db.Menus.FirstAsync(m => m.Name == "Users"); 
+
+        var permissions = await db.Permissions.ToListAsync();
+
+        var viewUsers = permissions.First(p =>
+            p.Name == Permissions.ViewUsers.Name); 
+
+        var mappings = new List<MenuPermission>
+    {
+        new MenuPermission
+        {
+            MenuId = dashboard.Id,
+            PermissionId = viewUsers.Id
+        },
+        new MenuPermission
+        {
+            MenuId = users.Id,
+            PermissionId = viewUsers.Id
+        }
+    };
+
+        db.MenuPermissions.AddRange(mappings);
+        await db.SaveChangesAsync();
+    }
+
 }

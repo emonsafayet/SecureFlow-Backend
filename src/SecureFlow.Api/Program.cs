@@ -8,10 +8,11 @@ using SecureFlow.Infrastructure.Persistence;
 using SecureFlow.Shared.Authorization;
 using Microsoft.AspNetCore.Authorization; 
 using System.Text;
+using System.IdentityModel.Tokens.Jwt;
 
-internal class Program
+public class Program
 {
-    private static async Task Main(string[] args)
+    public static async Task Main(string[] args)
     {
         var builder = WebApplication.CreateBuilder(args);
 
@@ -59,7 +60,7 @@ internal class Program
                 IssuerSigningKey = new SymmetricSecurityKey(
                     Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!)
                 ),
-
+                NameClaimType = JwtRegisteredClaimNames.Sub, //This helps CurrentUserService consistently read UserId.
                 ClockSkew = TimeSpan.Zero
             };
         });

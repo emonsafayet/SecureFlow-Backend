@@ -105,8 +105,18 @@ public class AppDbContext : DbContext, IAppDbContext
                   .HasForeignKey(x => x.PermissionId);
         });
 
-        modelBuilder.Entity<MenuPermission>()
-                    .HasKey(x => new { x.MenuId, x.PermissionId });
+        modelBuilder.Entity<MenuPermission>(entity =>
+        {
+            entity.HasKey(x => new { x.MenuId, x.PermissionId });
+
+            entity.HasOne(x => x.Menu)
+                  .WithMany(m => m.MenuPermissions)
+                  .HasForeignKey(x => x.MenuId);
+
+            entity.HasOne(x => x.Permission)
+                  .WithMany()
+                  .HasForeignKey(x => x.PermissionId);
+        });
 
     }
     private static LambdaExpression CreateIsDeletedFilter(Type type)

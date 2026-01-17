@@ -7,7 +7,7 @@ public interface IAppDbContext
 {
     DbSet<User> Users { get; }
     DbSet<UserRole> UserRoles { get; }
-    DbSet<Menu> Menus { get; } // Ensure 'Menu' refers to the correct type from the namespace
+    DbSet<Menu> Menus { get; } 
     DbSet<MenuPermission> MenuPermissions { get; }
     DbSet<Role> Roles { get; }
     DbSet<RolePermission> RolePermissions { get; }

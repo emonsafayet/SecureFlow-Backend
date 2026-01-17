@@ -51,17 +51,12 @@ public class CurrentUserService : ICurrentUserService
     public bool IsAuthenticated =>
         _httpContextAccessor.HttpContext?.User?.Identity?.IsAuthenticated ?? false;
 
-    public IReadOnlyCollection<string> Permissions
-    {
-        get
-        {
-            return _httpContextAccessor.HttpContext?
+    public IReadOnlyCollection<string> Permissions =>
+        _httpContextAccessor.HttpContext?
             .User?
             .Claims
             .Where(c => c.Type == "permission")
             .Select(c => c.Value)
-            .Distinct()
-            .ToList() ?? null;
-        }
-    }
+            .ToList()
+        ?? new List<string>();
 }
