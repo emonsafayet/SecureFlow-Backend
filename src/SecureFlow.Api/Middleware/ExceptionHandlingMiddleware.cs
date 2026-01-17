@@ -1,10 +1,9 @@
-﻿using System.Net;
-using System.Text.Json;
+﻿using SecureFlow.API.Models;
 using SecureFlow.Application.Common.Exceptions;
+using System.Net;
+using System.Text.Json;
 
-namespace SecureFlow.Api.Middleware;
-
-public sealed class ExceptionHandlingMiddleware
+public class ExceptionHandlingMiddleware
 {
     private readonly RequestDelegate _next;
     private readonly ILogger<ExceptionHandlingMiddleware> _logger;
@@ -25,37 +24,37 @@ public sealed class ExceptionHandlingMiddleware
         }
         catch (Exception ex)
         {
-            _logger.LogError(ex, "Unhandled exception");
-
+            _logger.LogError(ex, "Unhandled exception occurred");
             await HandleExceptionAsync(context, ex);
         }
     }
 
-    private static Task HandleExceptionAsync(
-        HttpContext context,
-        Exception exception)
+    private static async Task HandleExceptionAsync(
+      HttpContext context,
+      Exception exception)
     {
+        context.Response.ContentType = "application/json";
+
         var statusCode = exception switch
         {
             ValidationException => HttpStatusCode.BadRequest,
             NotFoundException => HttpStatusCode.NotFound,
             ForbiddenException => HttpStatusCode.Forbidden,
-            UnauthorizedAccessException => HttpStatusCode.Unauthorized,
             _ => HttpStatusCode.InternalServerError
         };
 
-        var problem = new
-        {
-            type = "https://httpstatuses.com/" + (int)statusCode,
-            title = statusCode.ToString(),
-            status = (int)statusCode,
-            detail = exception.Message
-        };
-
-        context.Response.ContentType = "application/problem+json";
         context.Response.StatusCode = (int)statusCode;
 
-        return context.Response.WriteAsync(
-            JsonSerializer.Serialize(problem));
+        var response = new ErrorResponse
+        {
+            Message = exception.Message,
+            Errors = exception is ValidationException ve
+                ? ve.Errors
+                : null
+        };
+
+        await context.Response.WriteAsync(
+            JsonSerializer.Serialize(response));
     }
+
 }

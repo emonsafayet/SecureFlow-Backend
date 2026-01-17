@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.DependencyInjection;
+﻿using MediatR;
+using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
 namespace SecureFlow.Application;
@@ -15,6 +16,8 @@ public static class DependencyInjection
         // AutoMapper
         services.AddAutoMapper(typeof(DependencyInjection).Assembly);
 
+        // Validation Behavior
+        services.AddTransient(typeof(IPipelineBehavior<,>),typeof(ValidationBehavior<,>));
 
         return services;
     }
