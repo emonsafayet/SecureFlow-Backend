@@ -1,4 +1,4 @@
-﻿# .NET build artifacts
+# .NET build artifacts
 **/bin/
 **/obj/
 
@@ -32,6 +32,10 @@ x86/
 # =========================
 *.log
 *.tmp
+**/Logs/
+**/logs/
+Logs/
+logs/
 
 # =========================
 # OS files
