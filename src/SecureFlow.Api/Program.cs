@@ -10,7 +10,8 @@ using SecureFlow.Infrastructure.Persistence;
 using SecureFlow.Shared.Authorization;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
-using Serilog; 
+using Serilog;
+using SecureFlow.Api.Middleware;
 public class Program
 {
     public static async Task Main(string[] args)
@@ -30,12 +31,13 @@ public class Program
         // --------------------------------------------------
         // Attach Serilog to ASP .NET pipeline
         // --------------------------------------------------
-        builder.Services.AddControllers();
+        builder.Host.UseSerilog();
+
 
         // --------------------------------------------------
-        // Logger
+        // Controller
         // --------------------------------------------------
-        builder.Host.UseSerilog();
+        builder.Services.AddControllers();
 
         // --------------------------------------------------
         // Swagger (ONCE, WITH JWT SUPPORT)
@@ -122,7 +124,7 @@ public class Program
             }
         });
         builder.Services.AddSingleton<IAuthorizationHandler, PermissionHandler>();
-         
+
 
         // --------------------------------------------------
         // Build app
@@ -154,8 +156,8 @@ public class Program
             });
         }
 
-    
-        
+
+
 
         app.UseHttpsRedirection();
         app.UseMiddleware<ExceptionHandlingMiddleware>();

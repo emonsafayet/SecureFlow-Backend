@@ -1,4 +1,6 @@
-﻿public class MenuDto
+namespace SecureFlow.Application.Menus.DTOs;
+
+public class MenuDto
 {
     public int Id { get; set; }
     public string Name { get; set; } = default!;

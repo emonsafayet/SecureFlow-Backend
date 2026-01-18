@@ -1,14 +1,16 @@
-﻿using MediatR;
+using MediatR;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using SecureFlow.Application.Common.Interfaces;
 using SecureFlow.Application.Common.Caching;
-using SecureFlow.Application.Common.Models;
+using SecureFlow.Application.Common.Exceptions;
+using SecureFlow.Application.Common.Interfaces;
+using SecureFlow.Application.Menus.DTOs;
+using SecureFlow.Shared.Models;
 
 namespace SecureFlow.Application.Menus.Queries.GetMenus;
 
 public class GetMenusQueryHandler
-    : IRequestHandler<GetMenusQuery, Result<List<MenuDto>>>
+    : IRequestHandler<GetMenusQuery, PaginationResponse<MenuDto>>
 {
     private readonly IAppDbContext _db;
     private readonly ICurrentUserService _currentUser;
@@ -27,7 +29,7 @@ public class GetMenusQueryHandler
         _cacheOptions = cacheOptions.Value;
     }
 
-    public async Task<Result<List<MenuDto>>> Handle(
+    public async Task<PaginationResponse<MenuDto>> Handle(
         GetMenusQuery request,
         CancellationToken cancellationToken)
     {
@@ -38,43 +40,72 @@ public class GetMenusQueryHandler
 
         if (userPermissions.Length == 0)
         {
-            return Result<List<MenuDto>>.Failure(
-                "User has no permissions assigned");
+            throw new ForbiddenException("User has no permissions assigned");
         }
 
         // 1️ Build cache key
         var permissionHash = string.Join("|", userPermissions);
         var cacheKey = CacheKeys.MenusByPermissions(permissionHash);
 
-        // 2️ Redis first
+        // 2️ Get all menus (from cache or DB)
+        List<MenuDto> allMenus;
         var cached = await _cache.GetAsync<List<MenuDto>>(cacheKey);
         if (cached != null)
         {
-            return Result<List<MenuDto>>.Success(cached);
+            allMenus = cached;
+        }
+        else
+        {
+            // 3️ DB query
+            allMenus = await _db.Menus
+                .AsNoTracking()
+                .Where(m =>
+                    m.MenuPermissions.Any(mp =>
+                        userPermissions.Contains(mp.Permission.Name)))
+                .OrderBy(m => m.Order)
+                .Select(m => new MenuDto
+                {
+                    Id = m.Id,
+                    Name = m.Name,
+                    Url = m.Url,
+                    Order = m.Order
+                })
+                .ToListAsync(cancellationToken);
+
+            // 4️ Cache result
+            await _cache.SetAsync(
+                cacheKey,
+                allMenus,
+                TimeSpan.FromMinutes(_cacheOptions.DefaultExpirationMinutes));
         }
 
-        // 3️ DB
-        var menus = await _db.Menus
-            .AsNoTracking()
-            .Where(m =>
-                m.MenuPermissions.Any(mp =>
-                    userPermissions.Contains(mp.Permission.Name)))
-            .OrderBy(m => m.Order)
-            .Select(m => new MenuDto
-            {
-                Id = m.Id,
-                Name = m.Name,
-                Url = m.Url,
-                Order = m.Order
-            })
-            .ToListAsync(cancellationToken);
+        // 5️ Apply pagination
+        var filter = request.Filter;
+        var totalCount = allMenus.Count;
 
-        // 4️ Cache result
-        await _cache.SetAsync(
-            cacheKey,
-            menus,
-            TimeSpan.FromMinutes(_cacheOptions.DefaultExpirationMinutes));
+        if (!filter.HasPaging)
+        {
+            // Return all if no pagination requested
+            return new PaginationResponse<MenuDto>(
+                allMenus,
+                totalCount,
+                pageNumber: 1,
+                pageSize: totalCount);
+        }
 
-        return Result<List<MenuDto>>.Success(menus);
+        var pageNumber = filter.PageNumber;
+        var pageSize = filter.PageSize;
+        var skip = (pageNumber - 1) * pageSize;
+
+        var pagedMenus = allMenus
+            .Skip(skip)
+            .Take(pageSize)
+            .ToList();
+
+        return new PaginationResponse<MenuDto>(
+            pagedMenus,
+            totalCount,
+            pageNumber,
+            pageSize);
     }
 }

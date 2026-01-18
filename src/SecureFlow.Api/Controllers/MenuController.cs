@@ -1,9 +1,13 @@
-﻿using MediatR;
+using MediatR;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SecureFlow.Application.Authorization;
+using SecureFlow.Application.Menus.DTOs;
 using SecureFlow.Application.Menus.Queries.GetMenus;
 using SecureFlow.Shared.Authorization;
+using SecureFlow.Shared.Models;
+
+namespace SecureFlow.Api.Controllers;
 
 [Authorize]
 [ApiController]
@@ -19,12 +23,9 @@ public class MenuController : ControllerBase
 
     [AuthorizePermission(Actions.View, Resources.Users)]
     [HttpGet]
-    public async Task<IActionResult> GetMenus()
+    public async Task<ApiResponse<PaginationResponse<MenuDto>>> GetMenus([FromQuery] PaginationFilter filter)
     {
-        var result = await _mediator.Send(new GetMenusQuery());
-
-        return result.IsSuccess
-            ? Ok(result)
-            : Forbid();
+        var result = await _mediator.Send(new GetMenusQuery(filter));
+        return new ApiResponse<PaginationResponse<MenuDto>>(result);
     }
 }

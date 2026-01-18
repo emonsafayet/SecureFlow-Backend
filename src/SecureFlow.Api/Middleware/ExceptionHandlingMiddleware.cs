@@ -1,7 +1,9 @@
-﻿using SecureFlow.API.Models;
 using SecureFlow.Application.Common.Exceptions;
+using SecureFlow.Shared.Models;
 using System.Net;
 using System.Text.Json;
+
+namespace SecureFlow.Api.Middleware;
 
 public class ExceptionHandlingMiddleware
 {
@@ -40,21 +42,32 @@ public class ExceptionHandlingMiddleware
             ValidationException => HttpStatusCode.BadRequest,
             NotFoundException => HttpStatusCode.NotFound,
             ForbiddenException => HttpStatusCode.Forbidden,
+            UnauthorizedAccessException => HttpStatusCode.Unauthorized,
             _ => HttpStatusCode.InternalServerError
         };
 
         context.Response.StatusCode = (int)statusCode;
 
-        var response = new ErrorResponse
+        IEnumerable<string>? errors = null;
+        
+        if (exception is ValidationException ve)
         {
-            Message = exception.Message,
-            Errors = exception is ValidationException ve
-                ? ve.Errors
-                : null
+            // Flatten ValidationException errors dictionary to string array
+            errors = ve.Errors
+                .SelectMany(kvp => kvp.Value.Select(v => $"{kvp.Key}: {v}"))
+                .ToArray();
+        }
+
+        var response = new ApiResponse<object>(
+            message: exception.Message,
+            errors: errors ?? (exception is ValidationException ? null : new[] { exception.Message }));
+
+        var options = new JsonSerializerOptions
+        {
+            PropertyNamingPolicy = JsonNamingPolicy.CamelCase
         };
 
         await context.Response.WriteAsync(
-            JsonSerializer.Serialize(response));
+            JsonSerializer.Serialize(response, options));
     }
-
 }

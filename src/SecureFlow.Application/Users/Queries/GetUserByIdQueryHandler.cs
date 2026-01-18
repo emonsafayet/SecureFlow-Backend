@@ -1,14 +1,14 @@
-﻿using AutoMapper;
+using AutoMapper;
 using MediatR;
+using SecureFlow.Application.Common.Exceptions;
 using SecureFlow.Application.Common.Interfaces;
-using SecureFlow.Application.Common.Models;
 using SecureFlow.Application.Users;
 using SecureFlow.Domain.Auth;
 
 namespace SecureFlow.Application.Auth.Users.Queries;
 
 public class GetUserByIdQueryHandler
-    : IRequestHandler<GetUserByIdQuery, Result<UserDto>>
+    : IRequestHandler<GetUserByIdQuery, UserDto>
 {
     private readonly IRepository<User> _users;
     private readonly IMapper _mapper;
@@ -21,7 +21,7 @@ public class GetUserByIdQueryHandler
         _mapper = mapper;
     }
 
-    public async Task<Result<UserDto>> Handle(
+    public async Task<UserDto> Handle(
         GetUserByIdQuery request,
         CancellationToken ct)
     {
@@ -29,12 +29,11 @@ public class GetUserByIdQueryHandler
 
         if (user == null)
         {
-            return Result<UserDto>.Failure(
-                $"User with ID {request.UserId} was not found");
+            throw new NotFoundException($"User with ID {request.UserId} was not found");
         }
 
         var dto = _mapper.Map<UserDto>(user);
 
-        return Result<UserDto>.Success(dto);
+        return dto;
     }
 }

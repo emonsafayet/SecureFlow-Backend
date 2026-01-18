@@ -1,13 +1,13 @@
-﻿using MediatR;
-using Microsoft.AspNetCore.Authorization;
+using MediatR;
+using Microsoft.AspNetCore.Authorization; 
 using Microsoft.AspNetCore.Mvc;
+using SecureFlow.Application.Auth.DTOs;
 using SecureFlow.Application.Auth.Login;
 using SecureFlow.Application.Auth.Users.Queries;
 using SecureFlow.Application.Authorization;
-using SecureFlow.Application.Menus.Queries.GetMenus;
 using SecureFlow.Application.Users;
 using SecureFlow.Shared.Authorization;
-using System.Security;
+using SecureFlow.Shared.Models;
 
 namespace SecureFlow.Api.Controllers;
 
@@ -23,24 +23,25 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("login")]
-    public async Task<IActionResult> Login(LoginCommand command)
+    public async Task<ApiResponse<LoginResponseDto>> Login(LoginCommand command)
     {
         var result = await _mediator.Send(command);
-        return Ok(result);
+        return new ApiResponse<LoginResponseDto>(result);
     }
      
     [AuthorizePermission(Actions.View, Resources.Users)]
-    [HttpGet("{id:int}")]
-    public async Task<IActionResult> GetUser(int id)
+    [HttpGet("users")]
+    public async Task<ApiResponse<PaginationResponse<UserDto>>> GetUsers([FromQuery] PaginationFilter filter)
     {
-        var result = await _mediator.Send(new GetUserByIdQuery(id));
-
-        if (!result.IsSuccess)
-            return NotFound(result.Errors);
-
-        return Ok(result.Data);
+        var result = await _mediator.Send(new GetUsersQuery(filter));
+        return new ApiResponse<PaginationResponse<UserDto>>(result);
     }
 
-
-
+    [AuthorizePermission(Actions.View, Resources.Users)]
+    [HttpGet("{id:int}")]
+    public async Task<ApiResponse<UserDto>> GetUser(int id)
+    {
+        var result = await _mediator.Send(new GetUserByIdQuery(id));
+        return new ApiResponse<UserDto>(result);
+    }
 }
